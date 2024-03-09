@@ -16,12 +16,11 @@ struct SampleBufferTransformer {
         let filter = CIFilter(name: "CIColorInvert", parameters: [kCIInputImageKey: ciMask])
 
         guard let outputImage: CIImage = filter?.outputImage else { fatalError() }
-        guard let pixelBuffer: CVImageBuffer = CMSampleBufferGetImageBuffer(videoSampleBuffer) else { fatalError() }
-        context.render(outputImage, to: pixelBuffer)
+        context.render(outputImage, to: cvImageBuffer)
 
 
         let presentationTimestamp = CMSampleBufferGetPresentationTimeStamp(videoSampleBuffer)
-        guard let result = try? pixelBuffer.mapToSampleBuffer(timestamp: presentationTimestamp) else {
+        guard let result = try? cvImageBuffer.mapToSampleBuffer(timestamp: presentationTimestamp) else {
             fatalError()
         }
         return result
