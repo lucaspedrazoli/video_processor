@@ -1,21 +1,16 @@
-# Color invert filter 
+# Video Processor
 
-This is a simplified version of our custom camera with a simple preview that only supports landscape left. The goal is to update `SampleBufferTransformer` to invert the colors.
+Video processing pipeline with Core Image. The function takes a video sample buffer, applies a Core Image filter specified by the `Filter` enum, and returns a new sample buffer with the filter applied.
 
-**Original**
-![](README/image.png)
+**Parameters:**
+- `videoSampleBuffer`: A CMSampleBuffer, which is a container for video and audio data.
+- `filter`: An enum type `Filter` indicating the Core Image filter to be applied.
 
-**Goal**
-![](README/image%202.png)
+This `CIContext` is used for rendering Core Image images.
 
-
-## Requirements 
-
-- Implementation with Swift
-- Fork repo and create a pull request with following 
-  - Pull request should merge into your fork 
-  - Briefly explain your approach
-  - Possible improvements if you had more time
-- Can ignore all error handling by using `fatalError()`
-- Try not to spend more than 30 minutes for the task, maximum 1 hour
-- Feel free to ask any questions or request tips if there's something unclear
+**Implementation Step by Step:**
+1. Extract the pixel buffer (`CVPixelBuffer`) from the input `videoSampleBuffer`.
+2. Create a `CIImage` from the pixel buffer. `CIImage` represents an image to be processed.
+3. A `CIFilter` is created using the filter name from the `Filter` enum. The input image for the filter is set to the `ciMask` image.
+4. Obtain the `outputImage` from the filter. This image is then rendered to the original `cvImageBuffer` using the `CIContext`.
+5. The `cvImageBuffer` is mapped to a new `CMSampleBuffer` using a custom helper.

@@ -12,7 +12,7 @@ class VideoDataOutput: NSObject {
 
 extension VideoDataOutput: AVCaptureVideoDataOutputSampleBufferDelegate {
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        let newBuffer = sampleBufferTransformer.transform(videoSampleBuffer: sampleBuffer)
+        let newBuffer = sampleBufferTransformer.transform(videoSampleBuffer: sampleBuffer, with: .colorInvert)
 
         displayLayer?.sampleBufferRenderer.enqueue(newBuffer)
     }
